@@ -80,6 +80,8 @@ class Cart:
                     offer.quantity + offer.free_quantity
                 )
 
+                print(quantity_of_offer)
+
                 if quantity_of_offer == 0:
                     continue
 
@@ -142,6 +144,7 @@ def parse_cart(skus) -> Cart:
 
     items = [CartItem(item=item, quantity=quantity) for item, quantity in cart.items()]
     return Cart(items=items)
+
 
 
 
