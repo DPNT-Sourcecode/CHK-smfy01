@@ -41,7 +41,7 @@ class Cart:
 
     def total_cost(self) -> int:
         # Clone items before calculating total
-        items = {item.item: item for item in self.items.item}
+        items = {item.item: item for item in self.items.items()}
         item_ids = set(items)
         have_freebie_offer = item_ids.intersection(FREEBIE_OFFERS)
 
@@ -206,9 +206,3 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
-
-
-
-
-
-

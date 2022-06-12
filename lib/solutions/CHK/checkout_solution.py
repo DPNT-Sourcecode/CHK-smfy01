@@ -25,4 +25,5 @@ def parse_cart(skus) -> Cart:
         raise NonexistentItemException()
 
     items = [CartItem(item=item, quantity=quantity) for item, quantity in cart.items()]
-    return Cart(items=items)
+    return Cart(items={cart_item.item: cart_item for cart_item in items})
+
