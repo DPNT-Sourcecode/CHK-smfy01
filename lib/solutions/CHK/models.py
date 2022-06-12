@@ -87,9 +87,10 @@ class DiscountOffer:
 
     @classmethod
     def create(cls, item: str, quantity: int, cost: int) -> "DiscountOffer":
-        return DiscountOffer(
-            item=item, quantity=quantity, cost=cost
-        )
+        return DiscountOffer(item=item, quantity=quantity, cost=cost)
+
+    def apply_to(cart_item: CartItem):
+        
 
 
 @dataclass
@@ -101,6 +102,7 @@ class FreebieOffer:
 
     @classmethod
     def create(cls, item: str, quantity: int, free_item: str) -> "FreebieOffer":
+        """We only offer a single freebie quantity at the moment"""
         return FreebieOffer(
             item=item, quantity=quantity, free_item=free_item, free_quantity=1
         )
@@ -166,14 +168,35 @@ DISCOUNT_OFFERS = {
 }
 
 FREEBIE_OFFERS = {
-    "E": FreebieOffer(item="E", quantity=2, free_item="B", free_quantity=1),
-    "F": FreebieOffer(item="F", quantity=2, free_item="F", free_quantity=1),
-    "N": FreebieOffer(item="N", quantity=3, free_item="M", free_quantity=1),
-    "R": FreebieOffer(item="R", quantity=3, free_item="Q", free_quantity=1),
-    "U": FreebieOffer(item="U", quantity=3, free_item="U", free_quantity=1),
+    "E": FreebieOffer.create(
+        item="E",
+        quantity=2,
+        free_item="B",
+    ),
+    "F": FreebieOffer.create(
+        item="F",
+        quantity=2,
+        free_item="F",
+    ),
+    "N": FreebieOffer.create(
+        item="N",
+        quantity=3,
+        free_item="M",
+    ),
+    "R": FreebieOffer.create(
+        item="R",
+        quantity=3,
+        free_item="Q",
+    ),
+    "U": FreebieOffer.create(
+        item="U",
+        quantity=3,
+        free_item="U",
+    ),
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
 
 
 
