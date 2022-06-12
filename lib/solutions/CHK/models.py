@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Optional, Set
+from typing import List, Optional, Set, Tuple
 
 
 @dataclass
@@ -18,10 +18,7 @@ class CartItem:
         total_cost = 0
 
         for offer in item_offers:
-            quantity_of_offer, remainder = divmod(quantity_remaining, offer.quantity)
 
-            if quantity_of_offer > 0:
-                total_cost += offer.cost * quantity_of_offer
 
             quantity_remaining = remainder
 
@@ -48,7 +45,7 @@ class Cart:
         for item in have_freebie_offer:
             offer = FREEBIE_OFFERS[item]
 
-            offer.apply()
+            offer.apply(items[item], items.get(offer.free_item))
 
         return sum((item.total_cost() for item in items.values()))
 
@@ -62,6 +59,13 @@ class DiscountOffer:
     @classmethod
     def create(cls, item: str, quantity: int, cost: int) -> "DiscountOffer":
         return DiscountOffer(item=item, quantity=quantity, cost=cost)
+
+    def apply(self, quantity: int) -> Tuple[int, int]:
+        quantity_of_offer, remainder = divmod(quantity, self.quantity)
+
+        total_cost = self.cost * quantity_of_offer
+
+        return total_cost, 
 
 
 @dataclass
@@ -189,5 +193,6 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
 
 
