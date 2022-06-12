@@ -60,20 +60,30 @@ class Cart:
             if offer.free_item != offer.item:
                 quantity_of_offer = items[item].quantity // offer.quantity
 
-                if quantity_of_offer > 0:
-                    item_to_discount: Optional[CartItem] = items.get(offer.free_item)
-                    if not item_to_discount:
-                        continue
+                if quantity_of_offer == 0:
+                    continue
 
-                    # Apply FREEBIE offer
-                    # Avoid negative quantities
-                    item_to_discount.quantity = max(
-                        0,
-                        item_to_discount.quantity
-                        - (offer.free_quantity * quantity_of_offer),
-                    )
+                item_to_discount: Optional[CartItem] = items.get(offer.free_item)
+                if not item_to_discount:
+                    continue
+
+                # Apply FREEBIE offer
+                # Avoid negative quantities
+                item_to_discount.quantity = max(
+                    0,
+                    item_to_discount.quantity
+                    - (offer.free_quantity * quantity_of_offer),
+                )
             else:
-                quantity_of_offer = items[item].quantity
+                cart_item = items[item]
+                quantity_of_offer = cart_item.quantity % (
+                    offer.quantity + offer.free_quantity
+                )
+
+                if quantity_of_offer == 0:
+                    continue
+
+                cart_item.quantity -= quantity_of_offer * offer.free_quantity
 
         return sum((item.total_cost() for item in items.values()))
 
@@ -132,6 +142,7 @@ def parse_cart(skus) -> Cart:
 
     items = [CartItem(item=item, quantity=quantity) for item, quantity in cart.items()]
     return Cart(items=items)
+
 
 
 
