@@ -2,7 +2,7 @@ from solutions.CHK.checkout_solution import checkout
 
 
 def test_missing_item():
-    assert checkout("Z") == -1
+    assert checkout("z") == -1
 
 
 def test_empty():
@@ -62,4 +62,3 @@ def test_apply_self_free_offer():
 def test_apply_self_free_offer_multiple():
     """With 6 F, the offer can be applied twice"""
     assert checkout("FFFFFF") == 40
-
