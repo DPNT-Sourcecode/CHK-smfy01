@@ -51,7 +51,9 @@ class Cart:
     items: List[CartItem]
 
     def total_cost(self) -> int:
-        return sum((item.total_cost() for item in self.items))
+        items = {item.item}
+
+        return sum((item.total_cost() for item in items))
 
 
 @dataclass
@@ -62,7 +64,11 @@ class Offer:
 
 
 @dataclass
-class F
+class FreeOffer:
+    item: str
+    quantity: int
+    free_item: str
+    free_quantity: int
 
 
 UNIT_COSTS = {"A": 50, "B": 30, "C": 20, "D": 15, "E": 40}
@@ -76,9 +82,7 @@ OFFERS = {
     "B": {2: Offer(item="B", quantity=2, cost=45)},
 }
 
-BOGOF_OFFERS = {
-    "E":
-}
+BOGOF_OFFERS = {"E": FreeOffer(item="B", quantity=2, free_item="B", free_quantity=1)}
 
 
 # noinspection PyUnusedLocal
@@ -106,4 +110,5 @@ def parse_cart(skus) -> Cart:
         for i, (item, quantity) in enumerate(cart.items())
     ]
     return Cart(items=items)
+
 
