@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Dict, Optional, Set, Tuple
 
 
 @dataclass
@@ -39,22 +39,26 @@ class CartItem:
 class Cart:
     items: Dict[str, CartItem]
 
-    def total_cost(self) -> int:
-        # Clone items before calculating total
-        items = {k: v for k, v in self.items.items()}
-        item_ids = set(items)
-        have_freebie_offer = item_ids.intersection(FREEBIE_OFFERS)
+    def _apply_freebie_offers(items) -> None:
+        have_freebie_offer = set(items).intersection(FREEBIE_OFFERS)
 
         for item in have_freebie_offer:
             offer = FREEBIE_OFFERS[item]
 
             offer.apply(items[item], items.get(offer.free_item))
 
+    def _apply_group_offers(items) -> int:
         total_group_discount = 0
         for group_offer in GROUP_OFFERS:
             total_group_discount += group_offer.apply(items)
 
-        print(total_group_discount)
+        return total_group_discount
+
+    def total_cost(self) -> int:
+        # Clone items before calculating total
+        items = {k: v for k, v in self.items.items()}
+
+        self._apply_freebie_offers(items)
 
         return total_group_discount + sum(
             (item.total_cost() for item in items.values())
@@ -233,6 +237,7 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
 
 
 
