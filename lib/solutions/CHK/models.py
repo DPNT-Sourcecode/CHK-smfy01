@@ -94,19 +94,59 @@ class FreeOffer:
     free_quantity: int
 
 
-UNIT_COSTS = {'A': 50, 'B': 30, 'C': 20, 'D': 15, 'E': 40, 'F': 10, 'G': 20, 'H': 10, 'I': 35, 'J': 60, 'K': 80, 'L': 90, 'M': 15, 'N': 40, 'O': 10, 'P': 50, 'Q': 30, 'R': 50, 'S': 30, 'T': 20, 'U': 40, 'V': 50, 'W': 20, 'X': 90, 'Y': 10, 'Z': 50}
+UNIT_COSTS = {
+    "A": 50,
+    "B": 30,
+    "C": 20,
+    "D": 15,
+    "E": 40,
+    "F": 10,
+    "G": 20,
+    "H": 10,
+    "I": 35,
+    "J": 60,
+    "K": 80,
+    "L": 90,
+    "M": 15,
+    "N": 40,
+    "O": 10,
+    "P": 50,
+    "Q": 30,
+    "R": 50,
+    "S": 30,
+    "T": 20,
+    "U": 40,
+    "V": 50,
+    "W": 20,
+    "X": 90,
+    "Y": 10,
+    "Z": 50,
+}
 
 DISCOUNT_OFFERS = {
     "A": {
-        # Deliberately sorted desc
         5: DiscountOffer(item="A", quantity=5, cost=200),
         3: DiscountOffer(item="A", quantity=3, cost=130),
     },
     "B": {2: DiscountOffer(item="B", quantity=2, cost=45)},
+    "H": {
+        10: DiscountOffer(item="H", quantity=10, cost=80),
+        5: DiscountOffer(item="H", quantity=5, cost=45),
+    },
+    "K": {2: DiscountOffer(item="K", quantity=2, cost=150)},
+    "P": {5: DiscountOffer(item="P", quantity=5, cost=200)},
+    "Q": {3: DiscountOffer(item="Q", quantity=3, cost=80)},
+    "V": {
+        3: DiscountOffer(item="V", quantity=3, cost=130),
+        2: DiscountOffer(item="V", quantity=2, cost=90),
+    },
 }
 
 FREEBIE_OFFERS = {
     "E": FreeOffer(item="E", quantity=2, free_item="B", free_quantity=1),
     "F": FreeOffer(item="F", quantity=2, free_item="F", free_quantity=1),
     "N": FreeOffer(item="N", quantity=3, free_item="M", free_quantity=1),
+    "R": FreeOffer(item="R", quantity=3, free_item="Q", free_quantity=1),
+    "U": FreeOffer(item="U", quantity=3, free_item="U", free_quantity=1),
 }
+

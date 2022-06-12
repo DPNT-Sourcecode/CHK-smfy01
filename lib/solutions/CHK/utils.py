@@ -53,10 +53,10 @@ def parse_table(table: str):
             match = re.match(DISCOUNT_REGEX, offer)
             if match:
                 discounts = discount_offers.setdefault(item, {})
-                quantity = match[1]
+                quantity = int(match[1])
                 cost = match[2]
                 discounts[quantity] = DiscountOffer(
-                    item=item, quantity=int(quantity, cost=cost
+                    item=item, quantity=quantity, cost=int(cost)
                 )
                 continue
 
@@ -65,7 +65,7 @@ def parse_table(table: str):
                 quantity = match[1]
                 free_item = match[2]
                 freebie_offers[item] = FreeOffer(
-                    item=item, quantity=quantity, free_item=free_item, free_quantity=1
+                    item=item, quantity=int(quantity), free_item=free_item, free_quantity=1
                 )
                 continue
 
@@ -105,5 +105,6 @@ if __name__ == "__main__":
             "| Z    | 50    |                        |"
         )
     )
+
 
 
