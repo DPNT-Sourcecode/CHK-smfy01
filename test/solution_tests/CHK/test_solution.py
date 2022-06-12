@@ -63,11 +63,20 @@ def test_apply_self_free_offer_multiple():
     """With 6 F, the offer can be applied twice"""
     assert checkout("FFFFFF") == 40
 
+
 def test_too_few_to_apply_group_offer():
     assert checkout("ST") == 40
+
 
 def test_apply_group_offer():
     assert checkout("STXYZ") == 45
 
+
+def test_apply_group_offer_with_remainder():
+    """The remainder should be the cheapest unit cost items"""
+    assert checkout("STXZ") == 62, "45 for the deal + 17 for X - the cheapest item"
+
+
 def test_apply_group_offer_multiple():
-    assert checkout("STXYZSTYXZ")
+    assert checkout("STXSTX") == 90
+

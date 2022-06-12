@@ -72,6 +72,8 @@ def parse_table(table: str):
                 )
                 continue
 
+            
+
             raise Exception("Expected an offer")
 
     return prices, discount_offers, freebie_offers
@@ -108,3 +110,4 @@ if __name__ == "__main__":
             "| Z    | 50    |                        |"
         )
     )
+
