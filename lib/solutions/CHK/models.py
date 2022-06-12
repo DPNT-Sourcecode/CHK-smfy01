@@ -40,6 +40,7 @@ class Cart:
     items: Dict[str, CartItem]
 
     def _apply_freebie_offers(items) -> None:
+        """Calculate FreebieOffers (mutating the items where required)"""
         have_freebie_offer = set(items).intersection(FREEBIE_OFFERS)
 
         for item in have_freebie_offer:
@@ -48,6 +49,8 @@ class Cart:
             offer.apply(items[item], items.get(offer.free_item))
 
     def _apply_group_offers(items) -> int:
+        """Calculate GroupOffers (mutating the items where required) and
+        return the total cost of the GroupOffers"""
         total_group_discount = 0
         for group_offer in GROUP_OFFERS:
             total_group_discount += group_offer.apply(items)
@@ -55,10 +58,14 @@ class Cart:
         return total_group_discount
 
     def total_cost(self) -> int:
-        # Clone items before calculating total
+        # Clone items before calculating total, so this is a "pure"(ish) function
+        # In reality we could have a separate CartCheckout object (which
+        # you could recreate at each step, with a running total)
         items = {k: v for k, v in self.items.items()}
 
         self._apply_freebie_offers(items)
+
+        total_group_discount = self._apply_group_offers(items)
 
         return total_group_discount + sum(
             (item.total_cost() for item in items.values())
@@ -237,6 +244,7 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
 
 
 
