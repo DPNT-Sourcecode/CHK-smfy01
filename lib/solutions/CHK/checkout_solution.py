@@ -17,7 +17,7 @@ def checkout(skus):
 
 def parse_cart(skus) -> Cart:
     if not skus:
-        return Cart(items=[])
+        return Cart(items={})
 
     cart = Counter(skus)
 
@@ -26,4 +26,5 @@ def parse_cart(skus) -> Cart:
 
     items = [CartItem(item=item, quantity=quantity) for item, quantity in cart.items()]
     return Cart(items={cart_item.item: cart_item for cart_item in items})
+
 

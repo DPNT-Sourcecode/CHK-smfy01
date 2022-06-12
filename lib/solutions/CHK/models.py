@@ -41,7 +41,7 @@ class Cart:
 
     def total_cost(self) -> int:
         # Clone items before calculating total
-        items = {item.item: item for item in self.items.item}
+        items = {k: v for k, v in self.items.items()}
         item_ids = set(items)
         have_freebie_offer = item_ids.intersection(FREEBIE_OFFERS)
 
@@ -128,6 +128,9 @@ class GroupOffer:
     def create(cls, items: Set[str], cost: int) -> "GroupOffer":
         return GroupOffer(items=items, cost=cost, quantity=3)
 
+    def apply(self, items: Dict[str, CartItem]):
+        total_for_offer = sum((item.quantity for item in items)
+
 
 UNIT_COSTS = {
     "A": 50,
@@ -206,6 +209,7 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
 
 
 
