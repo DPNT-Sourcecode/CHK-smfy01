@@ -97,6 +97,12 @@ class FreebieOffer:
 @dataclass
 class GroupOffer:
     items: Set[str]
+    quantity: int
+    cost: int
+
+    @classmethod
+    def create(cls, items: Set[str], cost: int) -> "GroupOffer":
+        return GroupOffer(items=items, cost=cost, quantity=3)
 
 
 UNIT_COSTS = {
@@ -154,5 +160,8 @@ FREEBIE_OFFERS = {
     "R": FreebieOffer(item="R", quantity=3, free_item="Q", free_quantity=1),
     "U": FreebieOffer(item="U", quantity=3, free_item="U", free_quantity=1),
 }
+
+GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
 
 
