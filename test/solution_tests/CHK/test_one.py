@@ -1,7 +1,7 @@
 from solutions.CHK.checkout_solution import checkout
 
 def test_missing_item():
-    assert checkout("E") == -1
+    assert checkout("Z") == -1
 
 def test_empty():
     assert checkout("") == 0
@@ -22,3 +22,6 @@ def test_multiple_products_over_offer():
 def test_multiple_quantity_of_offer():
     """offer price for 4 of the 5, normal price for the last unit"""
     assert checkout("BBBBB") == 120
+
+def test_
+
