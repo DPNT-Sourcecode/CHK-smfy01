@@ -92,10 +92,5 @@ def parse_cart(skus) -> Cart:
     if set(cart) - set(UNIT_COSTS.keys()):
         raise NonexistentItemException()
 
-    items = [CartItem(item=item, quantity=quantity) for item, quantity in cart.items()]
+    items = [CartItem(item=item, quantity=quantity) for item, quantity in enumerate(cart.items()]
     return Cart(items=items)
-
-
-
-
-

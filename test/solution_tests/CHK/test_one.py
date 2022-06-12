@@ -47,8 +47,3 @@ def test_get_one_free():
 
 def test_prioritise_free_over_quantity_offer():
     assert checkout("BBEE") == 110
-
-
-
-
-
