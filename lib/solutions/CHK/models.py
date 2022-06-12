@@ -129,7 +129,15 @@ class GroupOffer:
         return GroupOffer(items=items, cost=cost, quantity=3)
 
     def apply(self, items: Dict[str, CartItem]):
-        total_for_offer = sum((item.quantity for item in items)
+        """Reduce the quantity of the relevant items as many times as possible to apply the discount.
+        NB: If more than the group buy is added to these items, this logic needs updating"""
+        total_quantity_valid_for_offer = sum(
+            (cart_item.quantity for item, cart_item in items if item in self.items)
+        )
+
+        quantity_of_offer = total_quantity_valid_for_offer // self.quantity
+
+        #
 
 
 UNIT_COSTS = {
@@ -209,6 +217,7 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
 
 
 
