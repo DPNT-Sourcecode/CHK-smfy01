@@ -21,9 +21,9 @@ class CartItem:
             return PRICES[self.item] * self.quantity
 
         offer = OFFERS[self.item]
-        multiple_of_offer, remainder = divmod(self.quantity, offer.quantity)
+        quantity_of_offer, remainder = divmod(self.quantity, offer.quantity)
 
-        return PRICES[self.item] * remainder + offer.multiple_of_offer
+        return PRICES[self.item] * remainder + offer.cost * quantity_of_offer
 
 
 @dataclass
@@ -74,3 +74,4 @@ def parse_cart(skus) -> Cart:
 
     items = [CartItem(item=item, quantity=quantity) for item, quantity in cart.items()]
     return Cart(items=items)
+
