@@ -52,24 +52,28 @@ class Cart:
     def total_cost(self) -> int:
         # Clone items before calculating total
         items = {item.item: item for item in self.items}
-        have_FREEBIE_offer = set(items).intersection(FREEBIE_OFFERS)
+        have_freebie_offer = set(items).intersection(FREEBIE_OFFERS)
 
-        for item in have_FREEBIE_offer:
+        for item in have_freebie_offer:
             offer = FREEBIE_OFFERS[item]
-            quantity_of_offer = items[item].quantity // offer.quantity
 
-            if quantity_of_offer > 0:
-                item_to_discount: Optional[CartItem] = items.get(offer.free_item)
-                if not item_to_discount:
-                    continue
+            if offer.free_item != offer.item:
+                quantity_of_offer = items[item].quantity // offer.quantity
 
-                # Apply FREEBIE offer
-                # Avoid negative quantities
-                item_to_discount.quantity = max(
-                    0,
-                    item_to_discount.quantity
-                    - (offer.free_quantity * quantity_of_offer),
-                )
+                if quantity_of_offer > 0:
+                    item_to_discount: Optional[CartItem] = items.get(offer.free_item)
+                    if not item_to_discount:
+                        continue
+
+                    # Apply FREEBIE offer
+                    # Avoid negative quantities
+                    item_to_discount.quantity = max(
+                        0,
+                        item_to_discount.quantity
+                        - (offer.free_quantity * quantity_of_offer),
+                    )
+            else:
+                quantity_of_offer = items[item].quantity
 
         return sum((item.total_cost() for item in items.values()))
 
@@ -128,5 +132,6 @@ def parse_cart(skus) -> Cart:
 
     items = [CartItem(item=item, quantity=quantity) for item, quantity in cart.items()]
     return Cart(items=items)
+
 
 
