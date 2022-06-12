@@ -69,7 +69,7 @@ def test_too_few_to_apply_group_offer():
 
 
 def test_apply_group_offer():
-    assert checkout("STXYZ") == 45
+    assert checkout("STXYZS") == 90
 
 
 def test_apply_group_offer_with_remainder():

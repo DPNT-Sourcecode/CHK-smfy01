@@ -162,11 +162,12 @@ class GroupOffer:
             total_quantity_valid_for_offer, self.quantity
         )
 
+        if not quantity_of_offer:
+            return 0
+
         total_price = quantity_of_offer * self.cost
 
-        print(f"{=quantity_of_offer},{}")
-
-        if not (remainder or quantity_of_offer):
+        if not remainder:
             return total_price
 
         # Each item may have a unique price, so we need to figure out which
@@ -176,9 +177,7 @@ class GroupOffer:
             applicable_items, key=lambda item: UNIT_COSTS[item], reverse=True
         )
 
-        quantity_to_remove = total_quantity_valid_for_offer
-
-        print(quantity_to_remove)
+        quantity_to_remove = remainder
 
         for item in items_in_descending_price:
             cart_item = cart_items[item]
@@ -250,11 +249,3 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
-
-
-
-
-
-
-
-

@@ -109,5 +109,3 @@ if __name__ == "__main__":
             "| Z    | 21    | buy any 3 of (S,T,X,Y,Z) for 45 |"
         )
     )
-
-
