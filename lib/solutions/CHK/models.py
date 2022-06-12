@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List, Optional, Set
 
 
 @dataclass
@@ -87,11 +87,16 @@ class DiscountOffer:
 
 
 @dataclass
-class FreeOffer:
+class FreebieOffer:
     item: str
     quantity: int
     free_item: str
     free_quantity: int
+
+
+@dataclass
+class GroupOffer:
+    items: Set[str]
 
 
 UNIT_COSTS = {
@@ -143,10 +148,11 @@ DISCOUNT_OFFERS = {
 }
 
 FREEBIE_OFFERS = {
-    "E": FreeOffer(item="E", quantity=2, free_item="B", free_quantity=1),
-    "F": FreeOffer(item="F", quantity=2, free_item="F", free_quantity=1),
-    "N": FreeOffer(item="N", quantity=3, free_item="M", free_quantity=1),
-    "R": FreeOffer(item="R", quantity=3, free_item="Q", free_quantity=1),
-    "U": FreeOffer(item="U", quantity=3, free_item="U", free_quantity=1),
+    "E": FreebieOffer(item="E", quantity=2, free_item="B", free_quantity=1),
+    "F": FreebieOffer(item="F", quantity=2, free_item="F", free_quantity=1),
+    "N": FreebieOffer(item="N", quantity=3, free_item="M", free_quantity=1),
+    "R": FreebieOffer(item="R", quantity=3, free_item="Q", free_quantity=1),
+    "U": FreebieOffer(item="U", quantity=3, free_item="U", free_quantity=1),
 }
+
 

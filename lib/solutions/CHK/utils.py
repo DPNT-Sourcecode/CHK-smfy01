@@ -17,7 +17,7 @@ class DiscountOffer:
 
 
 @dataclass
-class FreeOffer:
+class FreebieOffer:
     item: str
     quantity: int
     free_item: str
@@ -64,8 +64,11 @@ def parse_table(table: str):
             if match:
                 quantity = match[1]
                 free_item = match[2]
-                freebie_offers[item] = FreeOffer(
-                    item=item, quantity=int(quantity), free_item=free_item, free_quantity=1
+                freebie_offers[item] = FreebieOffer(
+                    item=item,
+                    quantity=int(quantity),
+                    free_item=free_item,
+                    free_quantity=1,
                 )
                 continue
 
@@ -105,6 +108,7 @@ if __name__ == "__main__":
             "| Z    | 50    |                        |"
         )
     )
+
 
 
 
