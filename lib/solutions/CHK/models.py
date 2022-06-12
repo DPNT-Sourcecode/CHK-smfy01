@@ -54,6 +54,8 @@ class Cart:
         for group_offer in GROUP_OFFERS:
             total_group_discount += group_offer.apply(items)
 
+        print(total_group_discount)
+
         return total_group_discount + sum(
             (item.total_cost() for item in items.values())
         )
@@ -149,7 +151,7 @@ class GroupOffer:
 
         total_price = quantity_of_offer * self.cost
 
-        if not remainder:
+        if not (remainder or quantity_of_offer):
             return total_price
 
         # Each item may have a unique price, so we need to figure out which
@@ -231,6 +233,7 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
 
 
 
