@@ -48,33 +48,7 @@ class Cart:
         for item in have_freebie_offer:
             offer = FREEBIE_OFFERS[item]
 
-            if offer.free_item != offer.item:
-                quantity_of_offer = items[item].quantity // offer.quantity
-
-                if quantity_of_offer == 0:
-                    continue
-
-                item_to_discount: Optional[CartItem] = items.get(offer.free_item)
-                if not item_to_discount:
-                    continue
-
-                # Apply FREEBIE offer
-                # Avoid negative quantities
-                item_to_discount.quantity = max(
-                    0,
-                    item_to_discount.quantity
-                    - (offer.free_quantity * quantity_of_offer),
-                )
-            else:
-                cart_item = items[item]
-                quantity_of_offer = cart_item.quantity // (
-                    offer.quantity + offer.free_quantity
-                )
-
-                if quantity_of_offer == 0:
-                    continue
-
-                cart_item.quantity -= quantity_of_offer * offer.free_quantity
+            offer.apply()
 
         return sum((item.total_cost() for item in items.values()))
 
@@ -104,8 +78,27 @@ class FreebieOffer:
             item=item, quantity=quantity, free_item=free_item, free_quantity=1
         )
 
-    def apply(self, item: CartItem, free_item: CartItem):
-        
+    def apply(self, item: CartItem, item_to_discount: Optional[CartItem]):
+        if self.free_item != self.item:
+            if not item_to_discount:
+                return
+
+            quantity_of_offer = item.quantity // self.quantity
+
+            if quantity_of_offer == 0:
+                return
+
+            # Apply FREEBIE offer
+            # Avoid negative quantities
+            item_to_discount.quantity = max(
+                0,
+                item_to_discount.quantity - (self.free_quantity * quantity_of_offer),
+            )
+            return
+
+        quantity_of_offer = item.quantity // (self.quantity + self.free_quantity)
+
+        item.quantity -= quantity_of_offer * self.free_quantity
 
 
 @dataclass
@@ -196,4 +189,5 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
 
