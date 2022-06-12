@@ -14,10 +14,17 @@ class CartItem:
     quantity: int
 
     def is_on_offer(self) -> bool:
-        return self.item in 
+        return self.item in OFFERS
 
     def total_cost(self) -> int:
-        return PRICES[self.item] * self.quantity
+        if not self.is_on_offer():
+            return PRICES[self.item] * self.quantity
+
+        offer = OFFERS[self.item]
+        multiple_of_offer, remainder = divmod(self.quantity, offer.quantity)
+
+        return PRICES[self.item] * remainder + offer.multiple_of_offer
+
 
 @dataclass
 class Cart:
@@ -67,11 +74,3 @@ def parse_cart(skus) -> Cart:
 
     items = [CartItem(item=item, quantity=quantity) for item, quantity in cart.items()]
     return Cart(items=items)
-
-
-
-
-
-
-
-

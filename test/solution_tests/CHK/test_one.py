@@ -19,5 +19,6 @@ def test_multiple_products_over_offer():
     """offer price for the first 3, full price for the next"""
     assert checkout("AAAA") == 180
 
-
-
+def test_multiple_quantity_of_offer():
+    """offer price for 4 of the 5, normal price for the last unit"""
+    assert checkout("BBBBB") == 120
