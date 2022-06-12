@@ -50,10 +50,13 @@ class Cart:
 
             offer.apply(items[item], items.get(offer.free_item))
 
+        total_group_discount = 0
         for group_offer in GROUP_OFFERS:
-            group_offer.apply(items)
+            total_group_discount += group_offer.apply(items)
 
-        return sum((item.total_cost() for item in items.values()))
+        return total_group_discount + sum(
+            (item.total_cost() for item in items.values())
+        )
 
 
 @dataclass
@@ -128,7 +131,7 @@ class GroupOffer:
     def create(cls, items: Set[str], cost: int) -> "GroupOffer":
         return GroupOffer(items=items, cost=cost, quantity=3)
 
-    def apply(self, cart_items: Dict[str, CartItem]):
+    def apply(self, cart_items: Dict[str, CartItem]) -> int:
         """Reduce the quantity of the relevant items as many times as possible to apply the discount.
         NB: If more than the group buy is added to these items, this logic needs updating"""
         total_quantity_valid_for_offer = 0
@@ -144,11 +147,14 @@ class GroupOffer:
             total_quantity_valid_for_offer, self.quantity
         )
 
+        total_price = quantity_of_offer * self.cost
+
         if not remainder:
-            return quantity_of_offer * self.cost
+            return total_price
 
         # Each item may have a unique price, so we need to figure out which
-        # items should be removed in descending price
+        # items should be removed in descending price to minimise the
+        # final cart cost
         items_in_descending_price = sorted(
             applicable_items, key=lambda item: UNIT_COSTS[item], reverse=True
         )
@@ -158,9 +164,14 @@ class GroupOffer:
         for item in items_in_descending_price:
             cart_item = cart_items[item]
 
-            if cart_item.quantity > quantity_to_remove:
+            if cart_item.quantity >= quantity_to_remove:
                 cart_item.quantity -= quantity_to_remove
-                return
+                return total_price
+
+            quantity_to_remove -= cart_item.quantity
+            cart_item.quantity = 0
+
+        return total_price
 
 
 UNIT_COSTS = {
@@ -220,6 +231,7 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
 
 
 
