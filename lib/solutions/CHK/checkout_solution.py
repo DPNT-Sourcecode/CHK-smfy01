@@ -13,6 +13,7 @@ class NonexistentItemException(CartException):
 
 @dataclass
 class CartItem:
+    id: int
     item: str
     quantity: int
 
@@ -60,7 +61,11 @@ class Offer:
     cost: int
 
 
-UNIT_COSTS = {"A": 50, "B": 30, "C": 20, "D": 15}
+@dataclass
+class F
+
+
+UNIT_COSTS = {"A": 50, "B": 30, "C": 20, "D": 15, "E": 40}
 
 OFFERS = {
     "A": {
@@ -69,6 +74,10 @@ OFFERS = {
         3: Offer(item="A", quantity=3, cost=130),
     },
     "B": {2: Offer(item="B", quantity=2, cost=45)},
+}
+
+BOGOF_OFFERS = {
+    "E":
 }
 
 
@@ -92,5 +101,9 @@ def parse_cart(skus) -> Cart:
     if set(cart) - set(UNIT_COSTS.keys()):
         raise NonexistentItemException()
 
-    items = [CartItem(item=item, quantity=quantity) for item, quantity in enumerate(cart.items()]
+    items = [
+        CartItem(id=i + 1, item=item, quantity=quantity)
+        for i, (item, quantity) in enumerate(cart.items())
+    ]
     return Cart(items=items)
+

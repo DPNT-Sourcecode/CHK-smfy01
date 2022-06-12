@@ -42,8 +42,9 @@ def test_multiple_offers():
 
 
 def test_get_one_free():
-    assert checkout("BEE") == 110
+    assert checkout("BEE") == 80
 
 
 def test_prioritise_free_over_quantity_offer():
     assert checkout("BBEE") == 110
+
