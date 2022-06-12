@@ -7,6 +7,12 @@ def test_single_product_no_offer():
     assert checkout("C") == 20
 
 def test_multiple_products_no_offer():
-    assert checkout("A,B") == 80
+    assert checkout("AB") == 80
 
-def test_
+def test_multiple_products_with_exact_offer():
+    assert checkout("AAA") == 130
+
+def test_multiple_products_over_offer():
+    """offer price for the first 3, full price for the next"""
+    assert checkout("AAAA") == 180
+
