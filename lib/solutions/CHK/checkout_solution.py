@@ -21,7 +21,7 @@ class CartItem:
 
     def offer_cost(self) -> int:
         # Try largest offer first, then decrease offer quantity
-        item_offers = OFFERS[self.item]
+        item_offers = OFFERS[self.item].values()
         quantity_remaining = self.quantity
         total = 0
         for offer in item_offers:
@@ -68,7 +68,7 @@ OFFERS = {
         5: Offer(item="A", quantity=5, cost=200),
         3: Offer(item="A", quantity=3, cost=130),
     },
-    "B": Offer(item="B", quantity=2, cost=45),
+    "B": {2: Offer(item="B", quantity=2, cost=45)},
 }
 
 
@@ -94,6 +94,7 @@ def parse_cart(skus) -> Cart:
 
     items = [CartItem(item=item, quantity=quantity) for item, quantity in cart.items()]
     return Cart(items=items)
+
 
 
 
