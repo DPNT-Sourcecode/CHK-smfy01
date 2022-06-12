@@ -23,5 +23,15 @@ def test_multiple_quantity_of_offer():
     """offer price for 4 of the 5, normal price for the last unit"""
     assert checkout("BBBBB") == 120
 
-def test_
+def test_select_better_offer():
+    """250 (5 offer + 1) instead of 260(3 offer x 2)"""
+    assert checkout("AAAAAA") == 250
+
+def test_multiple_offers():
+    """1x 3 for 130, 1x 5 for 200"""
+    assert checkout("AAAAAAAA") == 330
+
+def test_get_one_free():
+    assert checkout("BEE") == 110
+
 
