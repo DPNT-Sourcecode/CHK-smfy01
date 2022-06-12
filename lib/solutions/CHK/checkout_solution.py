@@ -17,11 +17,11 @@ class CartItem:
     quantity: int
 
     def is_on_offer(self) -> bool:
-        return self.item in OFFERS
+        return self.item in DISCOUNT_OFFERS
 
     def offer_cost(self) -> int:
         # Try largest offer first, then decrease offer quantity
-        item_offers = OFFERS[self.item].values()
+        item_offers = DISCOUNT_OFFERS[self.item].values()
         quantity_remaining = self.quantity
         total = 0
         for offer in item_offers:
@@ -52,10 +52,10 @@ class Cart:
     def total_cost(self) -> int:
         # Clone items before calculating total
         items = {item.item: item for item in self.items}
-        have_bogof_offer = set(items).intersection(BOGOF_OFFERS)
+        have_FREEBIE_offer = set(items).intersection(FREEBIE_OFFERS)
 
-        for item in have_bogof_offer:
-            offer = BOGOF_OFFERS[item]
+        for item in have_FREEBIE_offer:
+            offer = FREEBIE_OFFERS[item]
             quantity_of_offer = items[item].quantity // offer.quantity
 
             if quantity_of_offer > 0:
@@ -63,7 +63,7 @@ class Cart:
                 if not item_to_discount:
                     continue
 
-                # Apply BOGOF offer
+                # Apply FREEBIE offer
                 # Avoid negative quantities
                 item_to_discount.quantity = max(
                     0,
@@ -75,7 +75,7 @@ class Cart:
 
 
 @dataclass
-class Offer:
+class DiscountOffer:
     item: str
     quantity: int
     cost: int
@@ -91,16 +91,16 @@ class FreeOffer:
 
 UNIT_COSTS = {"A": 50, "B": 30, "C": 20, "D": 15, "E": 40, "F": 10}
 
-OFFERS = {
+DISCOUNT_OFFERS = {
     "A": {
         # Deliberately sorted desc
-        5: Offer(item="A", quantity=5, cost=200),
-        3: Offer(item="A", quantity=3, cost=130),
+        5: DiscountOffer(item="A", quantity=5, cost=200),
+        3: DiscountOffer(item="A", quantity=3, cost=130),
     },
-    "B": {2: Offer(item="B", quantity=2, cost=45)},
+    "B": {2: DiscountOffer(item="B", quantity=2, cost=45)},
 }
 
-BOGOF_OFFERS = {
+FREEBIE_OFFERS = {
     "E": FreeOffer(item="E", quantity=2, free_item="B", free_quantity=1),
     "F": FreeOffer(item="F", quantity=2, free_item="F", free_quantity=1),
 }
@@ -128,4 +128,5 @@ def parse_cart(skus) -> Cart:
 
     items = [CartItem(item=item, quantity=quantity) for item, quantity in cart.items()]
     return Cart(items=items)
+
 
