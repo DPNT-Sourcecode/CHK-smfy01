@@ -56,7 +56,15 @@ class Cart:
         have_bogof_offer = set(items).intersection(BOGOF_OFFERS)
 
         for item in have_bogof_offer:
+            offer = BOGOF_OFFERS[item]
+            quantity_of_offer, remainder = divmod(items[item].quantity, offer.quantity)
 
+            if quantity_of_offer > 0:
+                item_to_discount = items.get(offer.free_item)
+                if not item_to_discount:
+                    continue
+
+                item_to_discount.quantity -=
 
         return sum((item.total_cost() for item in items.values()))
 
@@ -115,6 +123,7 @@ def parse_cart(skus) -> Cart:
         for i, (item, quantity) in enumerate(cart.items())
     ]
     return Cart(items=items)
+
 
 
 
