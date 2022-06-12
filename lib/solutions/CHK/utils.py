@@ -1,5 +1,7 @@
 import re
 
+from lib.solutions.CHK.models import DiscountOffer
+
 LINE_REGEX = r"^| ([A-Z])    | (\d+)\s+| (.*) |$"
 
 FREEBIE_REGEX = r"(\d)([A-Z]) get one [A-Z] free"
@@ -28,7 +30,10 @@ def parse_table(table: str):
         for offer in offers:
             match = re.match(DISCOUNT_REGEX, offer)
             if match:
-                discount_offers[item]
+                discounts = discount_offers.setdefault(item, {})
+                quantity = match[0]
+                price = match[2]
+                discounts[quantity] = DiscountOffer(item=item, quantity=)
 
 
 
@@ -64,6 +69,7 @@ print(parse_table(
     "| Y    | 10    |                        |\n"
     "| Z    | 50    |                        |"
 ))
+
 
 
 
