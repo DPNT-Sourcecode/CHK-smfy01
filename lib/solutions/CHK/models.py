@@ -158,7 +158,11 @@ class GroupOffer:
         for item in items_in_descending_price:
             cart_item = cart_items[item]
 
-            if cart_item.quantity >
+            if cart_item.quantity > quantity_to_remove:
+                cart_item.quantity -= quantity_to_remove
+                return
+
+            
 
 
 UNIT_COSTS = {
@@ -238,4 +242,5 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
 

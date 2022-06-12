@@ -62,3 +62,12 @@ def test_apply_self_free_offer():
 def test_apply_self_free_offer_multiple():
     """With 6 F, the offer can be applied twice"""
     assert checkout("FFFFFF") == 40
+
+def test_too_few_to_apply_group_offer():
+    assert checkout("ST") == 40
+
+def test_apply_group_offer():
+    assert checkout("STXYZ") == 45
+
+def test_apply_group_offer_multiple():
+    assert checkout("STXYZSTYXZ")
