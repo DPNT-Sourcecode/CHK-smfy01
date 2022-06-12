@@ -53,4 +53,13 @@ def test_too_few_to_apply_self_free_offer():
     """Don't meet minimum threshold of 3 of F to apply offer"""
     assert checkout("FF") == 20
 
-def test_
+
+def test_apply_self_free_offer():
+    """With at least 3 F, the offer can be applied"""
+    assert checkout("FFF") == 20
+
+
+def test_apply_self_free_offer_multiple():
+    """With 6 F, the offer can be applied twice"""
+    assert checkout("FFFFFF") == 40
+
