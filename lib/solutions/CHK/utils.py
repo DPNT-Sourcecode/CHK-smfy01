@@ -30,10 +30,13 @@ def parse_table(table: str):
     freebie_offers = {}
 
     for line in table.splitlines():
+        print(line)
         matches = re.findall(LINE_REGEX, line)
         item = matches[1][0]
         price = int(matches[2][1])
         offers = matches[3][2]
+
+        print(offers)
 
         prices[item] = price
 
@@ -45,6 +48,11 @@ def parse_table(table: str):
         offers.reverse()
 
         for offer in offers:
+            if not offer:
+                continue
+
+            print(offer)
+
             match = re.match(DISCOUNT_REGEX, offer)
             if match:
                 discounts = discount_offers.setdefault(item, {})
@@ -62,6 +70,7 @@ def parse_table(table: str):
                 freebie_offers[item] = FreeOffer(
                     item=item, quantity=quantity, free_item=free_item, free_quantity=1
                 )
+                continue
 
             raise Exception("Expected an offer")
 
@@ -99,3 +108,4 @@ if __name__ == "__main__":
             "| Z    | 50    |                        |"
         )
     )
+
