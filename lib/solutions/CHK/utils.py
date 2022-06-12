@@ -8,10 +8,10 @@ def parse_table(table: str):
     discount_offers = {}
     freebie_offers = {}
 
-    matches = re.finditer(LINE_REGEX, table, re.MULTILINE)
-
-    for match in matches:
-        print(match)
+    for line in table.splitlines():
+        matches = re.findall(LINE_REGEX, line)
+        item = matches[1].group(0)
+        
 
 
 parse_table(
@@ -42,3 +42,4 @@ parse_table(
     "| Y    | 10    |                        |\n"
     "| Z    | 50    |                        |"
 )
+
