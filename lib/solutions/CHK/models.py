@@ -85,6 +85,12 @@ class DiscountOffer:
     quantity: int
     cost: int
 
+    @classmethod
+    def create(cls, item: str, quantity: int, cost: int) -> "DiscountOffer":
+        return DiscountOffer(
+            item=item, quantity=quantity, cost=cost
+        )
+
 
 @dataclass
 class FreebieOffer:
@@ -92,6 +98,12 @@ class FreebieOffer:
     quantity: int
     free_item: str
     free_quantity: int
+
+    @classmethod
+    def create(cls, item: str, quantity: int, free_item: str) -> "FreebieOffer":
+        return FreebieOffer(
+            item=item, quantity=quantity, free_item=free_item, free_quantity=1
+        )
 
 
 @dataclass
@@ -136,20 +148,20 @@ UNIT_COSTS = {
 
 DISCOUNT_OFFERS = {
     "A": {
-        5: DiscountOffer(item="A", quantity=5, cost=200),
-        3: DiscountOffer(item="A", quantity=3, cost=130),
+        5: DiscountOffer.create(item="A", quantity=5, cost=200),
+        3: DiscountOffer.create(item="A", quantity=3, cost=130),
     },
-    "B": {2: DiscountOffer(item="B", quantity=2, cost=45)},
+    "B": {2: DiscountOffer.create(item="B", quantity=2, cost=45)},
     "H": {
-        10: DiscountOffer(item="H", quantity=10, cost=80),
-        5: DiscountOffer(item="H", quantity=5, cost=45),
+        10: DiscountOffer.create(item="H", quantity=10, cost=80),
+        5: DiscountOffer.create(item="H", quantity=5, cost=45),
     },
-    "K": {2: DiscountOffer(item="K", quantity=2, cost=150)},
-    "P": {5: DiscountOffer(item="P", quantity=5, cost=200)},
-    "Q": {3: DiscountOffer(item="Q", quantity=3, cost=80)},
+    "K": {2: DiscountOffer.create(item="K", quantity=2, cost=150)},
+    "P": {5: DiscountOffer.create(item="P", quantity=5, cost=200)},
+    "Q": {3: DiscountOffer.create(item="Q", quantity=3, cost=80)},
     "V": {
-        3: DiscountOffer(item="V", quantity=3, cost=130),
-        2: DiscountOffer(item="V", quantity=2, cost=90),
+        3: DiscountOffer.create(item="V", quantity=3, cost=130),
+        2: DiscountOffer.create(item="V", quantity=2, cost=90),
     },
 }
 
@@ -162,6 +174,7 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
 
 
 

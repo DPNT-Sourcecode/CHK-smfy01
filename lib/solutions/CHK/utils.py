@@ -55,7 +55,7 @@ def parse_table(table: str):
                 discounts = discount_offers.setdefault(item, {})
                 quantity = int(match[1])
                 cost = match[2]
-                discounts[quantity] = DiscountOffer(
+                discounts[quantity] = DiscountOffer.create(
                     item=item, quantity=quantity, cost=int(cost)
                 )
                 continue
@@ -108,6 +108,7 @@ if __name__ == "__main__":
             "| Z    | 50    |                        |"
         )
     )
+
 
 
 
