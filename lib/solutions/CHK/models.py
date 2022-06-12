@@ -162,13 +162,14 @@ class GroupOffer:
             total_quantity_valid_for_offer, self.quantity
         )
 
+        print("quantity_of_offer", quantity_of_offer)
+        print("remainder", remainder)
+
         if not quantity_of_offer:
             return 0
 
         total_price = quantity_of_offer * self.cost
-
-        if not remainder:
-            return total_price
+        print("total_price", total_price)
 
         # Each item may have a unique price, so we need to figure out which
         # items should be removed in descending price to minimise the
@@ -249,3 +250,4 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
