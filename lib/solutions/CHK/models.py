@@ -110,6 +110,3 @@ FREEBIE_OFFERS = {
     "F": FreeOffer(item="F", quantity=2, free_item="F", free_quantity=1),
     "N": FreeOffer(item="N", quantity=3, free_item="M", free_quantity=1),
 }
-
-
-

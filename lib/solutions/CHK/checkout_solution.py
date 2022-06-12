@@ -26,5 +26,3 @@ def parse_cart(skus) -> Cart:
 
     items = [CartItem(item=item, quantity=quantity) for item, quantity in cart.items()]
     return Cart(items=items)
-
-
