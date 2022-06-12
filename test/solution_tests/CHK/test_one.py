@@ -28,10 +28,11 @@ def test_select_better_offer():
     assert checkout("AAAAAA") == 250
 
 def test_multiple_offers():
-    """1x 3 for 130, 1x 5 for 200"""
-    assert checkout("AAAAAAAA") == 330
+    """1x unit price, 1x 3 for 130, 1x 5 for 200"""
+    assert checkout("AAAAAAAAA") == 330
 
 def test_get_one_free():
     assert checkout("BEE") == 110
+
 
 

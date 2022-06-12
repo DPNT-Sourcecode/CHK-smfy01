@@ -20,10 +20,12 @@ class CartItem:
         return self.item in OFFERS
 
     def offer_cost(self) -> int:
-        offer = OFFERS[self.item]
-        quantity_of_offer, remainder = divmod(self.quantity, offer.quantity)
+        # Try largest offer first, then decrease offer quantity
+        item_offers = OFFERS[self.item]
+        for offer in item_offers:
+            quantity_of_offer, remainder = divmod(self.quantity, offer.quantity)
 
-        return UNIT_COSTS[self.item] * remainder + offer.cost * quantity_of_offer
+            return UNIT_COSTS[self.item] * remainder + offer.cost * quantity_of_offer
 
     def total_cost(self) -> int:
         if not self.is_on_offer():
@@ -51,8 +53,9 @@ UNIT_COSTS = {"A": 50, "B": 30, "C": 20, "D": 15}
 
 OFFERS = {
     "A": {
-        3: Offer(item="A", quantity=3, cost=130),
+        # Deliberately sorted desc
         5: Offer(item="A", quantity=5, cost=200),
+        3: Offer(item="A", quantity=3, cost=130),
     },
     "B": Offer(item="B", quantity=2, cost=45),
 }
@@ -80,5 +83,6 @@ def parse_cart(skus) -> Cart:
 
     items = [CartItem(item=item, quantity=quantity) for item, quantity in cart.items()]
     return Cart(items=items)
+
 
 
