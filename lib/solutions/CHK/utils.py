@@ -3,8 +3,8 @@ import re
 
 LINE_REGEX = r"^| ([A-Z])    | (\d+)\s+| (.*) |$"
 
-FREEBIE_REGEX = r"(\d)[A-Z] get one ([A-Z]) free"
-DISCOUNT_REGEX = r"(\d)[A-Z] for (\d+)"
+FREEBIE_REGEX = r"(\d+)[A-Z] get one ([A-Z]) free"
+DISCOUNT_REGEX = r"(\d+)[A-Z] for (\d+)"
 
 # Hack to resolve some import issues
 
@@ -36,8 +36,6 @@ def parse_table(table: str):
         price = int(matches[2][1])
         offers = matches[3][2]
 
-        print(offers)
-
         prices[item] = price
 
         if not offers:
@@ -48,25 +46,24 @@ def parse_table(table: str):
         offers.reverse()
 
         for offer in offers:
+            offer = offer.rstrip()
             if not offer:
                 continue
-
-            print(offer)
 
             match = re.match(DISCOUNT_REGEX, offer)
             if match:
                 discounts = discount_offers.setdefault(item, {})
-                quantity = match[0]
-                cost = match[1]
+                quantity = match[1]
+                cost = match[2]
                 discounts[quantity] = DiscountOffer(
-                    item=item, quantity=quantity, cost=cost
+                    item=item, quantity=int(quantity, cost=cost
                 )
                 continue
 
             match = re.match(FREEBIE_REGEX, offer)
             if match:
-                quantity = match[0]
-                free_item = match[1]
+                quantity = match[1]
+                free_item = match[2]
                 freebie_offers[item] = FreeOffer(
                     item=item, quantity=quantity, free_item=free_item, free_quantity=1
                 )
@@ -108,4 +105,5 @@ if __name__ == "__main__":
             "| Z    | 50    |                        |"
         )
     )
+
 
