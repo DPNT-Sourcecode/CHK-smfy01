@@ -162,8 +162,6 @@ class GroupOffer:
                 cart_item.quantity -= quantity_to_remove
                 return
 
-            
-
 
 UNIT_COSTS = {
     "A": 50,
@@ -176,7 +174,7 @@ UNIT_COSTS = {
     "H": 10,
     "I": 35,
     "J": 60,
-    "K": 80,
+    "K": 70,
     "L": 90,
     "M": 15,
     "N": 40,
@@ -184,63 +182,44 @@ UNIT_COSTS = {
     "P": 50,
     "Q": 30,
     "R": 50,
-    "S": 30,
+    "S": 20,
     "T": 20,
     "U": 40,
     "V": 50,
     "W": 20,
-    "X": 90,
-    "Y": 10,
-    "Z": 50,
+    "X": 17,
+    "Y": 20,
+    "Z": 21,
 }
 
 DISCOUNT_OFFERS = {
     "A": {
-        5: DiscountOffer.create(item="A", quantity=5, cost=200),
-        3: DiscountOffer.create(item="A", quantity=3, cost=130),
+        5: DiscountOffer(item="A", quantity=5, cost=200),
+        3: DiscountOffer(item="A", quantity=3, cost=130),
     },
-    "B": {2: DiscountOffer.create(item="B", quantity=2, cost=45)},
+    "B": {2: DiscountOffer(item="B", quantity=2, cost=45)},
     "H": {
-        10: DiscountOffer.create(item="H", quantity=10, cost=80),
-        5: DiscountOffer.create(item="H", quantity=5, cost=45),
+        10: DiscountOffer(item="H", quantity=10, cost=80),
+        5: DiscountOffer(item="H", quantity=5, cost=45),
     },
-    "K": {2: DiscountOffer.create(item="K", quantity=2, cost=150)},
-    "P": {5: DiscountOffer.create(item="P", quantity=5, cost=200)},
-    "Q": {3: DiscountOffer.create(item="Q", quantity=3, cost=80)},
+    "K": {2: DiscountOffer(item="K", quantity=2, cost=120)},
+    "P": {5: DiscountOffer(item="P", quantity=5, cost=200)},
+    "Q": {3: DiscountOffer(item="Q", quantity=3, cost=80)},
     "V": {
-        3: DiscountOffer.create(item="V", quantity=3, cost=130),
-        2: DiscountOffer.create(item="V", quantity=2, cost=90),
+        3: DiscountOffer(item="V", quantity=3, cost=130),
+        2: DiscountOffer(item="V", quantity=2, cost=90),
     },
 }
 
 FREEBIE_OFFERS = {
-    "E": FreebieOffer.create(
-        item="E",
-        quantity=2,
-        free_item="B",
-    ),
-    "F": FreebieOffer.create(
-        item="F",
-        quantity=2,
-        free_item="F",
-    ),
-    "N": FreebieOffer.create(
-        item="N",
-        quantity=3,
-        free_item="M",
-    ),
-    "R": FreebieOffer.create(
-        item="R",
-        quantity=3,
-        free_item="Q",
-    ),
-    "U": FreebieOffer.create(
-        item="U",
-        quantity=3,
-        free_item="U",
-    ),
+    "E": FreebieOffer(item="E", quantity=2, free_item="B", free_quantity=1),
+    "F": FreebieOffer(item="F", quantity=2, free_item="F", free_quantity=1),
+    "N": FreebieOffer(item="N", quantity=3, free_item="M", free_quantity=1),
+    "R": FreebieOffer(item="R", quantity=3, free_item="Q", free_quantity=1),
+    "U": FreebieOffer(item="U", quantity=3, free_item="U", free_quantity=1),
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
 
 

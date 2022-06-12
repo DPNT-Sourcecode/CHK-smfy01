@@ -79,4 +79,3 @@ def test_apply_group_offer_with_remainder():
 
 def test_apply_group_offer_multiple():
     assert checkout("STXSTX") == 90
-
