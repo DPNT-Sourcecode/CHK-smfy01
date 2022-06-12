@@ -21,7 +21,7 @@ class Cart:
     items: List[CartItem]
 
     def total_cost(self) -> int:
-        return sum((item.total_cost for item in self.items))
+        return sum((item.total_cost() for item in self.items))
 
 
 PRICES = {
@@ -53,6 +53,7 @@ def parse_cart(skus) -> Cart:
 
     items = [CartItem(item=item, quantity=quantity) for item, quantity in cart.items()]
     return Cart(items=items)
+
 
 
 
