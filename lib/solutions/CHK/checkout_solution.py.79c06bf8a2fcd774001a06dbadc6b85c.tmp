@@ -66,7 +66,7 @@ class Cart:
 
                 # Avoid negative quantities
                 item_to_discount.quantity = max(
-                    0, RE
+                    0, remainder
                 )
 
         return sum((item.total_cost() for item in items.values()))
@@ -126,8 +126,3 @@ def parse_cart(skus) -> Cart:
         for i, (item, quantity) in enumerate(cart.items())
     ]
     return Cart(items=items)
-
-
-
-
-
