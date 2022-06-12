@@ -51,9 +51,14 @@ class Cart:
     items: List[CartItem]
 
     def total_cost(self) -> int:
-        items = {item.item}
+        # Clone items before calculating total
+        items = {item.item: item for item in items}
+        have_bogof_offer = set(items).intersection(BOGOF_OFFERS)
 
-        return sum((item.total_cost() for item in items))
+        for item in have_bogof_offer:
+
+
+        return sum((item.total_cost() for item in items.values()))
 
 
 @dataclass
@@ -110,5 +115,6 @@ def parse_cart(skus) -> Cart:
         for i, (item, quantity) in enumerate(cart.items())
     ]
     return Cart(items=items)
+
 
 
