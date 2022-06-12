@@ -2,6 +2,9 @@ import re
 
 LINE_REGEX = r"^| ([A-Z])    | (\d+)\s+| (.*) |$"
 
+FREEBIE_REGEX = r"(\d)([A-Z]) get one [A-Z] free"
+DISCOUNT_REGEX = r"(\d)[A-Z]) for \d+"
+
 
 def parse_table(table: str):
     prices = {}
@@ -10,11 +13,22 @@ def parse_table(table: str):
 
     for line in table.splitlines():
         matches = re.findall(LINE_REGEX, line)
-        item = matches[1].group(0)
-        
+        item = matches[1][0]
+        price = int(matches[2][1])
+        offers = matches[3][2]
+
+        prices[item] = price
+
+        if not offers:
+            continue
+
+        offers = offers.split(", ")
 
 
-parse_table(
+    return prices
+
+
+print(parse_table(
     "| A    | 50    | 3A for 130, 5A for 200 |\n"
     "| B    | 30    | 2B for 45              |\n"
     "| C    | 20    |                        |\n"
@@ -41,5 +55,6 @@ parse_table(
     "| X    | 90    |                        |\n"
     "| Y    | 10    |                        |\n"
     "| Z    | 50    |                        |"
-)
+))
+
 
