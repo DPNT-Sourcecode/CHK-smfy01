@@ -1,10 +1,11 @@
+from collections import Counter
 from dataclasses import dataclass
 from typing import List
 
 class CartException(Exception):
     pass
 
-class NonexistentItemException(Exception):
+class NonexistentItemException(CartException):
     pass
 
 @dataclass
@@ -29,17 +30,20 @@ PRICES = {
 def checkout(skus):
     try:
         cart = parse_cart(skus)
-    except
+    except CartException:
+        return -1
 
 def parse_cart(skus) -> List[SKU]:
     if not skus:
         return []
 
-    if
+    cart = Counter(skus)
 
+    if set(cart) -
 
 
 def price_of_sku(sku: string, quantity: int) -> int:
+
 
 
 
