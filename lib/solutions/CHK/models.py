@@ -149,7 +149,16 @@ class GroupOffer:
 
         # Each item may have a unique price, so we need to figure out which
         # items should be removed in descending price
-        items_in_price_order = sorted(applicable_items, key=lambda item: cart_items)
+        items_in_descending_price = sorted(
+            applicable_items, key=lambda item: UNIT_COSTS[item], reverse=True
+        )
+
+        quantity_to_remove = total_quantity_valid_for_offer
+
+        for item in items_in_descending_price:
+            cart_item = cart_items[item]
+
+            if cart_item.quantity >
 
 
 UNIT_COSTS = {
@@ -229,3 +238,4 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
