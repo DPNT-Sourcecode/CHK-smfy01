@@ -39,6 +39,7 @@ class CartItem:
 class Cart:
     items: Dict[str, CartItem]
 
+    @staticmethod
     def _apply_freebie_offers(items) -> None:
         """Calculate FreebieOffers (mutating the items where required)"""
         have_freebie_offer = set(items).intersection(FREEBIE_OFFERS)
@@ -48,6 +49,7 @@ class Cart:
 
             offer.apply(items[item], items.get(offer.free_item))
 
+    @staticmethod
     def _apply_group_offers(items) -> int:
         """Calculate GroupOffers (mutating the items where required) and
         return the total cost of the GroupOffers"""
@@ -162,6 +164,8 @@ class GroupOffer:
 
         total_price = quantity_of_offer * self.cost
 
+        print(f"{=quantity_of_offer},{}")
+
         if not (remainder or quantity_of_offer):
             return total_price
 
@@ -173,6 +177,8 @@ class GroupOffer:
         )
 
         quantity_to_remove = total_quantity_valid_for_offer
+
+        print(quantity_to_remove)
 
         for item in items_in_descending_price:
             cart_item = cart_items[item]
@@ -244,6 +250,7 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
 
 
 
