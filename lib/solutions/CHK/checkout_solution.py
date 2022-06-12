@@ -101,7 +101,10 @@ OFFERS = {
     "B": {2: Offer(item="B", quantity=2, cost=45)},
 }
 
-BOGOF_OFFERS = {"E": FreeOffer(item="B", quantity=2, free_item="B", free_quantity=1)}
+BOGOF_OFFERS = {
+    "E": FreeOffer(item="E", quantity=2, free_item="B", free_quantity=1),
+    "F": FreeOffer(item="F", quantity=1, free_item="F", free_quantity=1),
+}
 
 
 # noinspection PyUnusedLocal
@@ -129,9 +132,3 @@ def parse_cart(skus) -> Cart:
         for i, (item, quantity) in enumerate(cart.items())
     ]
     return Cart(items=items)
-
-
-
-
-
-

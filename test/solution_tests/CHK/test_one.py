@@ -48,3 +48,9 @@ def test_get_one_free():
 def test_prioritise_free_over_quantity_offer():
     assert checkout("BBEE") == 110
 
+
+def test_too_few_to_apply_self_free_offer():
+    """Don't meet minimum threshold of 3 of F to apply offer"""
+    assert checkout("FF") == 20
+
+def test_
