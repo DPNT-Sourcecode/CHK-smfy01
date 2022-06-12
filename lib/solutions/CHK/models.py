@@ -21,9 +21,6 @@ class CartItem:
             if quantity_of_offer > 0:
                 total += offer.cost * quantity_of_offer
 
-            if remainder == 0:
-                return total
-
             quantity_remaining = remainder
 
         # After all offers applied, we may have some left at unit price
@@ -88,9 +85,6 @@ class DiscountOffer:
     @classmethod
     def create(cls, item: str, quantity: int, cost: int) -> "DiscountOffer":
         return DiscountOffer(item=item, quantity=quantity, cost=cost)
-
-    def apply_to(cart_item: CartItem):
-        
 
 
 @dataclass
@@ -196,8 +190,3 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
-
-
-
-
-
