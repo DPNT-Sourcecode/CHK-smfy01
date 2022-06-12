@@ -69,6 +69,8 @@ class Cart:
 
         total_group_discount = self._apply_group_offers(items)
 
+        print("items", items)
+
         return total_group_discount + sum(
             (item.total_cost() for item in items.values())
         )
@@ -158,18 +160,12 @@ class GroupOffer:
             total_quantity_valid_for_offer += cart_item.quantity
             applicable_items.add(item)
 
-        quantity_of_offer, remainder = divmod(
-            total_quantity_valid_for_offer, self.quantity
-        )
-
-        print("quantity_of_offer", quantity_of_offer)
-        print("remainder", remainder)
+        quantity_of_offer = total_quantity_valid_for_offer // self.quantity
 
         if not quantity_of_offer:
             return 0
 
         total_price = quantity_of_offer * self.cost
-        print("total_price", total_price)
 
         # Each item may have a unique price, so we need to figure out which
         # items should be removed in descending price to minimise the
@@ -178,7 +174,7 @@ class GroupOffer:
             applicable_items, key=lambda item: UNIT_COSTS[item], reverse=True
         )
 
-        quantity_to_remove = remainder
+        quantity_to_remove = quantity_of_offer * self.quantity
 
         for item in items_in_descending_price:
             cart_item = cart_items[item]
@@ -250,4 +246,5 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
 
