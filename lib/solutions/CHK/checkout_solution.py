@@ -52,21 +52,24 @@ class Cart:
 
     def total_cost(self) -> int:
         # Clone items before calculating total
-        items = {item.item: item for item in items}
+        items = {item.item: item for item in self.items}
         have_bogof_offer = set(items).intersection(BOGOF_OFFERS)
 
         for item in have_bogof_offer:
             offer = BOGOF_OFFERS[item]
-            quantity_of_offer, remainder = divmod(items[item].quantity, offer.quantity)
+            quantity_of_offer = items[item].quantity // offer.quantity
 
             if quantity_of_offer > 0:
                 item_to_discount: Optional[CartItem] = items.get(offer.free_item)
                 if not item_to_discount:
                     continue
 
+                # Apply BOGOF offer
                 # Avoid negative quantities
                 item_to_discount.quantity = max(
-                    0, RE
+                    0,
+                    item_to_discount.quantity
+                    - (offer.free_quantity * quantity_of_offer),
                 )
 
         return sum((item.total_cost() for item in items.values()))
@@ -126,6 +129,7 @@ def parse_cart(skus) -> Cart:
         for i, (item, quantity) in enumerate(cart.items())
     ]
     return Cart(items=items)
+
 
 
 
