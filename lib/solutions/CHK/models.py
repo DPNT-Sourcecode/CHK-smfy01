@@ -18,7 +18,9 @@ class CartItem:
         total_cost = 0
 
         for offer in item_offers:
+            offer_total, remainder = offer.apply(quantity_remaining)
 
+            total_cost += offer_total
 
             quantity_remaining = remainder
 
@@ -40,12 +42,15 @@ class Cart:
     def total_cost(self) -> int:
         # Clone items before calculating total
         items = {item.item: item for item in self.items}
+        item_codes = set(items)
         have_freebie_offer = set(items).intersection(FREEBIE_OFFERS)
 
         for item in have_freebie_offer:
             offer = FREEBIE_OFFERS[item]
 
             offer.apply(items[item], items.get(offer.free_item))
+
+        have_group_offer = set(items)
 
         return sum((item.total_cost() for item in items.values()))
 
@@ -65,7 +70,7 @@ class DiscountOffer:
 
         total_cost = self.cost * quantity_of_offer
 
-        return total_cost, 
+        return total_cost, remainder
 
 
 @dataclass
@@ -193,6 +198,7 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
 
 
 
