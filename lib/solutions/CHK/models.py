@@ -13,18 +13,21 @@ class CartItem:
     def offer_cost(self) -> int:
         # Try largest offer first, then decrease offer quantity
         item_offers = DISCOUNT_OFFERS[self.item].values()
+
         quantity_remaining = self.quantity
-        total = 0
+        total_cost = 0
+
         for offer in item_offers:
             quantity_of_offer, remainder = divmod(quantity_remaining, offer.quantity)
 
             if quantity_of_offer > 0:
-                total += offer.cost * quantity_of_offer
+                total_cost += offer.cost * quantity_of_offer
 
             quantity_remaining = remainder
 
         # After all offers applied, we may have some left at unit price
-        return UNIT_COSTS[self.item] * remainder + total
+        total_cost += UNIT_COSTS[self.item] * remainder
+        return total_cost
 
     def total_cost(self) -> int:
         if not self.is_on_offer():
@@ -100,6 +103,9 @@ class FreebieOffer:
         return FreebieOffer(
             item=item, quantity=quantity, free_item=free_item, free_quantity=1
         )
+
+    def apply(self, item: CartItem, free_item: CartItem):
+        
 
 
 @dataclass
@@ -190,3 +196,4 @@ FREEBIE_OFFERS = {
 }
 
 GROUP_OFFERS = [GroupOffer.create(items=set("STXYZ"), cost=45)]
+
