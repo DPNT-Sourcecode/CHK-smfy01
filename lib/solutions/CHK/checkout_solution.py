@@ -13,6 +13,9 @@ class CartItem:
     item: str
     quantity: int
 
+    def is_on_offer(self) -> bool:
+        return self.item in 
+
     def total_cost(self) -> int:
         return PRICES[self.item] * self.quantity
 
@@ -23,12 +26,23 @@ class Cart:
     def total_cost(self) -> int:
         return sum((item.total_cost() for item in self.items))
 
+@dataclass
+class Offer:
+    item: str
+    quantity: int
+    cost: int
+
 
 PRICES = {
     "A": 50,
     "B": 30,
     "C": 20,
     "D": 15
+}
+
+OFFERS = {
+    "A": Offer(item="A", quantity=3, cost=130),
+    "B": Offer(item="B", quantity=2, cost=45)
 }
 
 
@@ -44,7 +58,7 @@ def checkout(skus):
 
 def parse_cart(skus) -> Cart:
     if not skus:
-        return []
+        return Cart(items=[])
 
     cart = Counter(skus)
 
@@ -53,6 +67,7 @@ def parse_cart(skus) -> Cart:
 
     items = [CartItem(item=item, quantity=quantity) for item, quantity in cart.items()]
     return Cart(items=items)
+
 
 
 
