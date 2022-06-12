@@ -40,6 +40,8 @@ def checkout(skus):
     except CartException:
         return -1
 
+    return cart.total_cost()
+
 def parse_cart(skus) -> Cart:
     if not skus:
         return []
@@ -52,8 +54,6 @@ def parse_cart(skus) -> Cart:
     items = [CartItem(item=item, quantity=quantity) for item, quantity in cart.items()]
     return Cart(items=items)
 
-
-def price_of_sku(sku: string, quantity: int) -> int:
 
 
 
